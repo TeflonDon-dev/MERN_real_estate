@@ -20,6 +20,7 @@ import {
   updateUserSuccess,
 } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const fileRef = useRef(null);
@@ -175,6 +176,9 @@ const Profile = () => {
           className=" bg-slate-700 p-3 uppercase text-white hover:opacity-95 rounded-lg disabled:opacity-80"
         >
           {loading ? "LOADING" : "UPDATE"}
+        </button>
+        <button className=" bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95">
+          <Link to={"/create-listing"}>Create Listing</Link>
         </button>
       </form>
       <div className=" flex justify-between mt-5 ">
