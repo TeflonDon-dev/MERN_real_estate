@@ -12,6 +12,9 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
@@ -92,13 +95,27 @@ const Profile = () => {
         method: "DELETE",
       });
       const data = await res.json();
-      if ((data.success = false)) {
+      if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
         return;
       }
       dispatch(deleteUserSuccess(data));
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
+    }
+  };
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch("/api/auth/signout");
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+        return;
+      }
+      dispatch(signOutUserSuccess(data));
+    } catch (error) {
+      dispatch(signOutUserFailure(error.message));
     }
   };
   return (
@@ -167,7 +184,12 @@ const Profile = () => {
         >
           Delete Account
         </span>
-        <span className=" text-red-700 cursor-pointer  ">Sign Out</span>
+        <span
+          className=" text-red-700 cursor-pointer  "
+          onClick={handleSignOut}
+        >
+          Sign Out
+        </span>
       </div>
       <p className=" text-red-700 mt-5">{error ? error : ""}</p>
       <p className=" text-green-700 mt-5">
